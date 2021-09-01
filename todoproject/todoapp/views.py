@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import TodoListItem
+from .models import TodoListItem, TodoList
 
 def todoappView(request):
-    all_todo_items = TodoListItem.objects.all()
+    all_todo_items = TodoList.objects.all()
     return render(request, 'index.html', {'all_items': all_todo_items})
 
 def addTodoView(request):

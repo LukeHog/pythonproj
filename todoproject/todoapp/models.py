@@ -1,8 +1,9 @@
 from django.db import models
 
+class TodoList(models.Model):
+    name = models.CharField(max_length=100, primary_key=True)
+
 class TodoListItem(models.Model):
     content = models.TextField()
     status = models.BooleanField(default=False)
-
-class TodoList(models.Model):
-    child_item = models.ForeignKey(TodoListItem, on_delete=models.CASCADE)
+    todo = models.ForeignKey(TodoList, on_delete=models.CASCADE)

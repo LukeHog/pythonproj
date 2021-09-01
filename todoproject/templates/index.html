@@ -2,15 +2,7 @@
 
 <ul>
     {% for i in all_items %}
-    <li>{{i.content}} {% if i.status == True %} <i>(Completed)</i> {% endif %}</li>
-    <form action="/deleteTodoItem/{{i.id}}">
-        {% csrf_token %}
-        <input type="submit" value="Delete">
-    </form>
-    <form action="/updateTodoItem/{{i.id}}">
-        {% csrf_token %}
-        <input type="submit" value="Completed">
-    </form>
+
     {% endfor %}
 </ul>
 
