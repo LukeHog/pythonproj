@@ -1,13 +1,46 @@
-<h1>Todo List</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<ul>
-    {% for i in all_items %}
+    <head>
+        <title>Todo List</title>
+    </head>
 
-    {% endfor %}
-</ul>
+    <body>
+        <h1>Todo List</h1>
+        <ol>
+            {% for j in all_items %}
+                <li{{ j.name }}></li>
+            <li><ul>
+                {% for i in TodoList.objects.get(id=j.id).todolistitem_set.all() %}
 
-<form action="/addTodoItem/" method="post">
-    {% csrf_token %}
-    <input type="text" name="content">
-    <input type="submit" value="Add Item">
-</form>
+                    <li>{{i.content}} {% if i.status == True %} <i>(Completed)</i> {% endif %}</li>
+                    <form action="/addTodoItem/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="content">
+                        <input type="submit" value="Add Item">
+                    </form>
+
+                    <form action="/deleteTodoItem/{{i.id}}">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>
+
+                    <form action="/updateTodoItem/{{i.id}}">
+                        {% csrf_token %}
+                        <input type="submit" value="Completed">
+                    </form>
+                {% endfor %}
+            </ul></li>
+
+            {% endfor %}
+
+        </ol>
+
+        <form action="/addtodolist/" method="post">
+            {% csrf_token %}
+            <input type="text" name="todoname">
+            <input type="submit" value="Add Todo">
+        </form>
+
+    </body>
+</html>

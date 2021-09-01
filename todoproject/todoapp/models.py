@@ -1,7 +1,7 @@
 from django.db import models
 
 class TodoList(models.Model):
-    name = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=110, primary_key=True)
 
 class TodoListItem(models.Model):
     content = models.TextField()

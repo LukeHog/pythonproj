@@ -6,6 +6,16 @@ def todoappView(request):
     all_todo_items = TodoList.objects.all()
     return render(request, 'index.html', {'all_items': all_todo_items})
 
+def addtodolist(request):
+    new = request.POST['todoname']
+    new_todo = TodoList(name = new)
+    new_todo.save()
+    return HttpResponseRedirect('/todoapp/')
+
+def deletetodolist(request):
+    pass
+
+
 def addTodoView(request):
     x = request.POST['content']
     new_item = TodoListItem(content = x)
