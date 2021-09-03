@@ -7,34 +7,39 @@
 
     <body>
         <h1>Todo List</h1>
-        <ol>
-            {% for j in all_items %}
-                <li{{ j.name }}></li>
-            <li><ul>
-                {% for i in TodoList.objects.get(id=j.id).todolistitem_set.all() %}
+        <ul>
+            {% for item in all_items %}
+                <li>{{ item.name }}</li>
+                <form action="/deletetodolist/{{item.id}}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete Todo">
+                </form>
 
-                    <li>{{i.content}} {% if i.status == True %} <i>(Completed)</i> {% endif %}</li>
-                    <form action="/addTodoItem/" method="post">
+                <form action="/addTodoItem/" method="post">
                         {% csrf_token %}
                         <input type="text" name="content">
                         <input type="submit" value="Add Item">
-                    </form>
+                </form>
+            <li><ol>
+                {% for listitem in item.todolistitem_set.all %}
 
-                    <form action="/deleteTodoItem/{{i.id}}">
+                    <li>{{listitem.content}} {% if listitem.status == True %} <i>(Completed)</i> {% endif %}</li>
+
+                    <form action="/deleteTodoItem/{{listitem.id}}" method="post">
                         {% csrf_token %}
                         <input type="submit" value="Delete">
                     </form>
 
-                    <form action="/updateTodoItem/{{i.id}}">
+                    <form action="/updateTodoItem/{{listitem.id}}" method="post">
                         {% csrf_token %}
                         <input type="submit" value="Completed">
                     </form>
                 {% endfor %}
-            </ul></li>
+            </ol></li>
 
             {% endfor %}
 
-        </ol>
+        </ul>
 
         <form action="/addtodolist/" method="post">
             {% csrf_token %}

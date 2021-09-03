@@ -12,8 +12,10 @@ def addtodolist(request):
     new_todo.save()
     return HttpResponseRedirect('/todoapp/')
 
-def deletetodolist(request):
-    pass
+def deletetodolist(request, i):
+    item = TodoList.objects.get(id=i)
+    item.delete()
+    return HttpResponseRedirect('/todoapp/')
 
 
 def addTodoView(request):
