@@ -9,33 +9,12 @@
         <h1>Todo List</h1>
         <ul>
             {% for item in all_items %}
-                <li>{{ item.name }}</li>
+
+                <li><a href="/todolistpage/{{item.id}}">{{ item.name }}</a></li>
                 <form action="/deletetodolist/{{item.id}}" method="post">
                     {% csrf_token %}
                     <input type="submit" value="Delete Todo">
                 </form>
-
-                <form action="/addTodoItem/" method="post">
-                        {% csrf_token %}
-                        <input type="text" name="content">
-                        <input type="submit" value="Add Item">
-                </form>
-            <li><ol>
-                {% for listitem in item.todolistitem_set.all %}
-
-                    <li>{{listitem.content}} {% if listitem.status == True %} <i>(Completed)</i> {% endif %}</li>
-
-                    <form action="/deleteTodoItem/{{listitem.id}}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete">
-                    </form>
-
-                    <form action="/updateTodoItem/{{listitem.id}}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Completed">
-                    </form>
-                {% endfor %}
-            </ol></li>
 
             {% endfor %}
 

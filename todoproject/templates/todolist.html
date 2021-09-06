@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>Todo List Items</title>
+    </head>
+
+    <body>
+        <h1>{{todo.name}}</h1>
+        <ul>
+                {% for listitem in todo_list %}
+
+                    <li>{{listitem.content}} {% if listitem.status == True %} <i>(Completed)</i> {% endif %}</li>
+
+                    <form action="/deleteTodoItem/{{listitem.id}}">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>
+
+                    <form action="/updateTodoItem/{{listitem.id}}">
+                        {% csrf_token %}
+                        <input type="submit" value="Completed">
+                    </form>
+                {% endfor %}
+
+        </ul>
+
+        <form action="/addTodoItem/{{todo.id}}" method="post">
+            {% csrf_token %}
+            <input type="text" name="content">
+            <input type="submit" value="Add Item">
+        </form>
+    </body>
+
+</html>
