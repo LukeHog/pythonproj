@@ -7,29 +7,31 @@
 
     <body>
         <h1>{{todo.name}}</h1>
-        <ul>
-                {% for listitem in todo_list %}
+        <ol>
+                {% for listitem in todo_items %}
 
                     <li>{{listitem.content}} {% if listitem.status == True %} <i>(Completed)</i> {% endif %}</li>
 
-                    <form action="/deleteTodoItem/{{listitem.id}}">
+                    <form action="{% url 'deleteitem' i=listitem.id %}">
                         {% csrf_token %}
                         <input type="submit" value="Delete">
                     </form>
 
-                    <form action="/updateTodoItem/{{listitem.id}}">
+                    <form action="{% url 'updateitem' i=listitem.id %}">
                         {% csrf_token %}
                         <input type="submit" value="Completed">
                     </form>
                 {% endfor %}
 
-        </ul>
+        </ol>
 
-        <form action="/addTodoItem/{{todo.id}}" method="post">
+        <form action="{% url 'additem' i=todo.id %}" method="post">
             {% csrf_token %}
             <input type="text" name="content">
             <input type="submit" value="Add Item">
         </form>
+
+        <a href="{% url 'home' %}">Return to Homepage</a>
     </body>
 
 </html>

@@ -10,8 +10,8 @@
         <ul>
             {% for item in all_items %}
 
-                <li><a href="/todolistpage/{{item.id}}">{{ item.name }}</a></li>
-                <form action="/deletetodolist/{{item.id}}" method="post">
+                <li><a href="{% url 'todolistpage' i=item.id %}">{{ item.name }}</a></li>
+                <form action="{% url 'deletetodo' i=item.id %}" method="post">
                     {% csrf_token %}
                     <input type="submit" value="Delete Todo">
                 </form>
@@ -20,7 +20,7 @@
 
         </ul>
 
-        <form action="/addtodolist/" method="post">
+        <form action="{% url 'addtodo' %}" method="post">
             {% csrf_token %}
             <input type="text" name="todoname">
             <input type="submit" value="Add Todo">
