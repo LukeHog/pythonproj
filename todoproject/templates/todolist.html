@@ -29,7 +29,6 @@
                 <button type="submit" class="btn btn-primary">Add Item</button>
               </div>
             </form>
-
             <table class="table mb-4">
               <thead>
                 <tr>
@@ -46,12 +45,12 @@
                   <td>{{listitem.content}}</td>
                   <td>{% if listitem.status == True %}Finished{% else %}In progress{% endif %}</td>
                   <td>
-                    <form action="{% url 'deleteitem' i=listitem.id %}">
+                    <form action="{% url 'deleteitem' i=listitem.id %}" style="display:inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
-                    <form action="{% url 'updateitem' i=listitem.id %}">
+                    <form action="{% url 'updateitem' i=listitem.id %}" style="display:inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success">Finished</button>
                     </form>
