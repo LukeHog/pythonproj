@@ -1,6 +1,10 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from .models import TodoListItem, TodoList
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import TodoListSerializer, TodoListItemSerializer
 
 def todoappview(request):
     """
@@ -87,3 +91,24 @@ def updatetodoview(request, i):
     todo_id = item.todo.id
     item.save()
     return redirect('todolistpage',i=todo_id)
+
+class TLList(APIView):
+
+    def get(self, request):
+        todos = TodoList.objects.all()
+        serializer = TodoListSerializer(todos, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
+
+class TLIList(APIView):
+
+    def get(self, request, id):
+        todo = TodoList.objects.get(id=id)
+        todolists = TodoListItem.objects.filter(todo=todo)
+        serializer = TodoListItemSerializer(todolists, many=True)
+        return Response(serializer.data)
+
+    def post(self):
+        pass
