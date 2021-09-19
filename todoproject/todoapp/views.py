@@ -93,8 +93,19 @@ def updatetodoview(request, i):
     return redirect('todolistpage',i=todo_id)
 
 class TLList(APIView):
+    """
+    Class Name: TLList
+    Derived Class: rest_framework.view.APIView
+
+    Description: This view is called when the url for api is accessed
+    """
 
     def get(self, request):
+        """
+        The get method returns a json format data as response for a get request
+        :param request: this the default parameter of view
+        :return: JSON format of data in TodoList data
+        """
         todos = TodoList.objects.all()
         serializer = TodoListSerializer(todos, many=True)
         return Response(serializer.data)
@@ -103,8 +114,21 @@ class TLList(APIView):
         pass
 
 class TLIList(APIView):
+    """
+    Class name: TLIList
+    Derived Class: rest_framework.view.APIView
+
+    Description: This class view is called when the url '/todolistapi' is called
+    """
 
     def get(self, request, id):
+        """
+        The get method returns a json format data as response for a get request
+
+        :param request: this the default parameter of view
+        :param id: id of the Todo List
+        :return: JSON format of data in TodoListItem table
+        """
         todo = TodoList.objects.get(id=id)
         todolists = TodoListItem.objects.filter(todo=todo)
         serializer = TodoListItemSerializer(todolists, many=True)
