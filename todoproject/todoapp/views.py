@@ -110,8 +110,17 @@ class TLList(APIView):
         serializer = TodoListSerializer(todos, many=True)
         return Response(serializer.data)
 
-    def post(self):
-        pass
+    def post(self, request):
+        """
+        The post method gets the json format data and adds a record in the TodoList
+        :param request:
+        :return:
+        """
+        todo = request.data.get('todo')
+        serializer = TodoListSerializer(data=todo)
+        if serializer.is_valid(raise_exception=True):
+            saved_todo = serializer.save()
+        return Response({"success": "Todo '{}' created successfully".format(saved_todo.name)})
 
 class TLIList(APIView):
     """
@@ -126,7 +135,7 @@ class TLIList(APIView):
         The get method returns a json format data as response for a get request
 
         :param request: this the default parameter of view
-        :param id: id of the Todo List
+        :param id: id of the TodoList
         :return: JSON format of data in TodoListItem table
         """
         todo = TodoList.objects.get(id=id)
@@ -134,5 +143,15 @@ class TLIList(APIView):
         serializer = TodoListItemSerializer(todolists, many=True)
         return Response(serializer.data)
 
-    def post(self):
-        pass
+    def post(self, request, id):
+        """
+        The post method gets data from request in json format and adds a record in TodoLisItem
+        :param request: this the default parameter of view
+        :param id: id of the TodoList
+        :return: Response with success message
+        """
+        todolist = request.data.get('todolist')
+        serializer = TodoListItemSerializer(data=todolist)
+        if serializer.is_valid(raise_exception=True):
+            saved_todolist = serializer.save()
+        return Response({"success": "TodoItem '{}' created successfully".format(saved_todolist.content)})

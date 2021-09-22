@@ -13,6 +13,9 @@ class TodoListSerializer(serializers.ModelSerializer):
         model = TodoList
         fields = '__all__'
 
+    def create(self, validated_data):
+        return TodoList.objects.create(**validated_data)
+
 class TodoListItemSerializer(serializers.ModelSerializer):
     """
     Class Name: TodoListSerializer
@@ -23,4 +26,7 @@ class TodoListItemSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = TodoListItem
-        fields = ('id', 'content', 'status')
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return TodoListItem.objects.create(**validated_data)
