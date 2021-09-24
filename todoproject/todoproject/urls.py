@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from todoapp.views import todoappview, addtodoview, deletetodoview, updatetodoview, addtodolist, deletetodolist, todolistpage, TLList, TLIList
+from todoapp.views import todoappview, addtodoview, deletetodoview, updatetodoview, addtodolist, deletetodolist, todolistpage, TLList, TLIList, TodoListItemAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('todolistpage/<int:i>', todolistpage, name='todolistpage'),
     path('todoapi/', TLList.as_view(), name='todoapi'),
     path('todolistapi/<int:id>', TLIList.as_view(), name='todolistapi'),
+    path('todolistitemapi/<int:id>', TodoListItemAPI.as_view(), name='todolistitemapi'),
 ]

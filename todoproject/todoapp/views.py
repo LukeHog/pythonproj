@@ -155,3 +155,19 @@ class TLIList(APIView):
         if serializer.is_valid(raise_exception=True):
             saved_todolist = serializer.save()
         return Response({"success": "TodoItem '{}' created successfully".format(saved_todolist.content)})
+
+    def delete(self, request, id):
+        todo = get_object_or_404(TodoList.objects.all(), id=id)
+        todo.delete()
+        return Response({"message": "Todolist with id {} has been deleted.".format(id)}, status=204)
+
+class TodoListItemAPI(APIView):
+    def get(self, request, id):
+        todolistitem = TodoListItem.objects.get(id=id)
+        serializer = TodoListItemSerializer(todolistitem)
+        return Response(serializer.data)
+
+    def delete(self, request, id):
+        todo = TodoListItem.objects.get(id=id)
+        todo.delete()
+        return Response({"message": "TodolistItem with id {} has been deleted.".format(id)}, status=204)
