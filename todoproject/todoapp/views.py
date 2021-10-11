@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.contrib.auth import login
+from django.urls import reverse
 from .models import TodoListItem, TodoList
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import TodoListSerializer, TodoListItemSerializer
+from .forms import CustomUserCreationForm
 
 def todoappview(request):
     """
@@ -171,3 +173,15 @@ class TodoListItemAPI(APIView):
         todo = TodoListItem.objects.get(id=id)
         todo.delete()
         return Response({"message": "TodolistItem with id {} has been deleted.".format(id)}, status=204)
+
+def register(request):
+    if request.method == "GET":
+        return render(request, "users/register.html", {"form": CustomUserCreationForm})
+    elif request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+        return redirect('home')

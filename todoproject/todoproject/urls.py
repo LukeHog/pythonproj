@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from todoapp.views import todoappview, addtodoview, deletetodoview, updatetodoview, addtodolist, deletetodolist, todolistpage, TLList, TLIList, TodoListItemAPI
+from django.conf.urls import include, url
+from todoapp.views import todoappview, addtodoview, deletetodoview, updatetodoview, addtodolist, deletetodolist, todolistpage, TLList, TLIList, TodoListItemAPI, register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include("django.contrib.auth.urls")),
+    path('register/', register, name="register"),
     path('todoapp/', todoappview, name='home'),
     path('addTodoItem/<int:i>', addtodoview, name='additem'),
     path('deleteTodoItem/<int:i>', deletetodoview, name='deleteitem'),
